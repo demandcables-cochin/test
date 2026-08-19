@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-body: "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  --color-void: #05040f;
+  --color-ink: #0a0d22;
+  --color-panel: #0b0f26;
+  --color-star: #e9edfb;
+  --color-dim: #8b93b8;
+  --color-faint: #5a628a;
+  --color-solar: #ffb54d;
+  --color-solar-deep: #f0781e;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--color-void);
+  color: var(--color-star);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(255, 181, 77, 0.35);
+  color: #fff7e8;
+}
+
+/* ---------- slim scrollbars ---------- */
+.scroll-slim {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 147, 184, 0.3) transparent;
+}
+.scroll-slim::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-slim::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: rgba(139, 147, 184, 0.25);
+  border-radius: 99px;
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 147, 184, 0.45);
+}
+
+/* ---------- orrery interactions ---------- */
+.planet-pop {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.35);
+}
+.planet-pop:hover {
+  transform: scale(1.32);
+}
+
+.sel-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sel-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.sun-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sun-breathe 5.5s ease-in-out infinite;
+}
+
+.orbit-ring {
+  transition:
+    stroke 0.35s ease,
+    stroke-opacity 0.35s ease,
+    stroke-width 0.35s ease;
+}
+
+@keyframes sel-ping {
+  0% {
+    transform: scale(0.82);
+    opacity: 0.95;
+  }
+  70%,
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+@keyframes sun-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scale(1.17);
+    opacity: 1;
+  }
+}
+
+/* ---------- entrances ---------- */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes hint-float {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+.animate-hint {
+  animation: hint-float 2.6s ease-in-out infinite;
+}
+
+@keyframes blink-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+.animate-blink {
+  animation: blink-dot 1.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .planet-pop,
+  .orbit-ring {
+    transition: none !important;
+  }
+  .sel-ring,
+  .sun-pulse,
+  .animate-fade-up,
+  .animate-hint,
+  .animate-blink {
+    animation: none !important;
+  }
+}
